@@ -1,4 +1,128 @@
-1.1
-- Optimized the JPEG compression to get a better quality image in trade of image size.
-- Created the ImageWriter and ImageWriterFactory to export images to PNG and JPEG. Deprecated the
-method to export to PNG and JPEG in TextImage.
+
+pipeline {
+    agent any
+    tools{
+        maven 'MAVEN_HOME'
+    }
+    stages {
+        stage('git repo & clean') {
+            steps {
+                bat "rmdir /s /q E-ticketing || exit 0"
+                bat "git clone https://github.com/ssvkotamraju/E-ticketing.git"
+                bat "mvn clean -f E-ticketing/pom.xml"
+            }
+        }
+        stage('install') {
+            steps {
+                bat "mvn install -f E-ticketing/pom.xml"
+            }
+        }
+        stage('test') {
+            steps {
+                bat "mvn test -f E-ticketing/pom.xml"
+            }
+        }
+        stage('package') {
+            steps {
+                bat 'mvn package -f E-ticketing/pom.xml'
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+MINIKUBE
+
+minikube start
+kubectl create deployment mynginx --image=nginx
+kubectl get deployments
+kubectl expose deployment mynginx --type=NodePort --port=80 --target-port=80
+kubectl scale deployment mynginx --replicas=4
+kubectl get deployments
+kubectl get pods
+kubectl port-forward svc/mynginx 8082:80
+kubectl delete deployment mynginx
+kubectl delete service mynginx
+minikube stop
+
+kubectl create deployment mynginx --image=nginx
+
+# If deployment already exists, update image
+kubectl set image deployment/mynginx nginx=nginx:latest
+
+kubectl get deployments
+kubectl get pods
+kubectl describe pods
+
+NAGIOS
+
+docker pull jasonrivers/nagios:latest
+docker run --name nagiosdemo -p 8888:80 jasonrivers/nagios:latest
+docker start -ai nagiosdemo
+docker stop nagiosdemo
+docker rm nagiosdemo
+docker rmi jasonrivers/nagios:latest
+
+AWS - EC2 
+AWS GO through
+
+open cmd admitorr - 
+1 ..cd path of key pair
+2 copy in one aws
+3 sudo apt update
+4 sudo apt-get install docker.io
+5 sudo apt install git
+6 sudo apt install nano
+open folder in example index.htmlinn git bash
+1 git init
+2 git add .
+3 git commit -m "first commit"
+4 git branch -M main
+5 git remote add origin https...link of repository
+6 git push -u origin main
+7 after go to back to git copy http link and go back to command prompt
+8 git clone paste it
+9 ls 
+8 cd git hub repo foldername
+9 ls 
+10 nano Dockerfile
+11 inn file 
+  FROM nginx:alpine
+  COPY . /usr/share/nginx/html
+12 sudo docker build -t mywebapp . 
+13 sudo docker run -d -p 80:80 mywebapp
+14 ip address port number
+15 sudo doxker ps
+16 sudo doxker stop name
+17 terminat the instance
+
+for webapp 
+sam upto docker file
+inside 
+18 From tomcat:9-jdk11
+ COPY target/*.war/usr/local/webapps/
+19  sudo docker build -t mywebproejctapp .
+20  sudo docker run -d -p 90:90 mywebprojectapp
+21  ip paste in ip4 address port/sudo docker run -d -p 80:80 mywebapp
+22 15 sudo doxker ps
+16 sudo doxker stop name
+17 terminat the instance
+
